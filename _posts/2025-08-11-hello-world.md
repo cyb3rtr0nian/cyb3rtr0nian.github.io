@@ -25,10 +25,6 @@ deactivate
 
 - Pictures, `<`reference`>`
     
-    ![image.png](image.png)
-    
-    ![nmap UHD.png](nmap_UHD.png)
-    
 
 <aside>
 
