@@ -1,0 +1,9 @@
+- name: Nmap
+  url: https://nmap.org/
+  description: "Network scanning tool"
+  language: "C++"
+
+- name: Metasploit
+  url: https://metasploit.com/
+  description: "Penetration testing framework"
+  language: "Ruby"
