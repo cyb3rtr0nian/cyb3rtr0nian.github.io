@@ -36,7 +36,11 @@ social:
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
   name: Cyb3rtr0n
   email: cyb3tr0nian@proton.me # change to your email address
-  links:
+  links: 
+    - name: GitHub
+      url: https://github.com/cyb3rtr0nian
+    - name: Twitter
+      url: https://twitter.com/itef0x 
     # The first element serves as the copyright owner's link
     #- https://twitter.com/username # change to your Twitter homepage
     #- https://github.com/username # change to your GitHub homepage
