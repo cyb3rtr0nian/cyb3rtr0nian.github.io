@@ -6,8 +6,6 @@ icon: fas fa-tools
 order: 2
 ---
 
-# Tools
-
 Here is the list of my custom tools. Use the filter and sorting options to find what you need.
 
 <div id="tools-list"></div>
