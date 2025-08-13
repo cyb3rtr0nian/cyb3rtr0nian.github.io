@@ -1,7 +1,7 @@
 ---
 title: "Nmap Basics"
 date: 2025-08-11 00:00:00 +0800
-categories: [CTPS]
+categories: [CPTS]
 tags: [nmap]
 ---
 
