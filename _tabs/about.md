@@ -1,30 +1,14 @@
 ---
 # the default layout is 'page'
+title: Whoami
 icon: fas fa-info-circle
 order: 5
 ---
 
-> Education Purposes Only
-{: .prompt-tip }
+Hey there, I’m [Cyb3rtr0n](https://www.linkedin.com/in/mostafa-abdelaziz-7bb918237/)!
 
+Penetration Tester and aspiring Red Teamer. I focus on finding and fixing security issues in networks, web applications, and systems.
 
-```bash
-┌──(Cyb3rtr0n㉿CyberWorld)-[~/]
-└─$ whoami
-Cyb3rtr0n | Pentester | Security Researcher | CTF Player
+I enjoy learning by doing - participating in CTFs, experimenting with tools, and exploring how systems work. Curiosity drives me, and my goal is always to make digital assets safer.
 
-┌──(Cyb3rtr0n㉿CyberWorld)-[~/welcome]
-└─$ echo "Welcome to My Cybersecurity World!"
-"Hello there! I am Cyb3rtr0n, a passionate cybersecurity enthusiast on a mission to explore, learn, and share knowledge across the digital security landscape."
-
-┌──(Cyb3rtr0n㉿CyberWorld)-[~/fields]
-└─$ ls
-> WebApp Sec          > Network Sec
-> ActiveDirectory     > Programming
-> + more...
-
-┌──(Cyb3rtr0n㉿CyberWorld)-[~/notes]
-└─$ cat README.md
-"This space contains my curated cybersecurity notes—collected, tested, and constantly updated."
-"Some content might feel familiar, but it is tailored for both personal reference and to support others on their infosec journey."
-```
+If you want to connect or collaborate on a project - you can find me on [HackerHaven](https://discord.gg/gMUhehdQ) Discord server.
