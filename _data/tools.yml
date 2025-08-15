@@ -1,9 +1,56 @@
-- name: Nmap
-  url: https://nmap.org/
-  description: "Network scanning tool"
-  language: "C++"
-
-- name: Metasploit
-  url: https://metasploit.com/
-  description: "Penetration testing framework"
-  language: "Ruby"
+- id: 1
+  name: Nmap
+  url: https://nmap.org
+  language: C++
+  category: Network
+  description: Network discovery and security auditing tool
+  icon: fa-network-wired
+- id: 2
+  name: MSFconsole
+  url: https://www.metasploit.com
+  language: Ruby
+  category: Exploitation
+  description: Penetration testing platform for developing and executing exploits
+  icon: fa-bug
+- id: 3
+  name: Burp Suite
+  url: https://portswigger.net/burp
+  language: Java
+  category: Web
+  description: Web application security testing platform
+  icon: fa-globe
+- id: 4
+  name: John the Ripper
+  url: https://www.openwall.com/john
+  language: C
+  category: Password
+  description: Password cracking tool
+  icon: fa-key
+- id: 5
+  name: Wireshark
+  url: https://www.wireshark.org
+  language: C++
+  category: Network
+  description: Network protocol analyzer
+  icon: fa-network-wired
+- id: 6
+  name: Hashcat
+  url: https://hashcat.net/hashcat
+  language: C++
+  category: Password
+  description: Advanced password recovery tool
+  icon: fa-lock
+- id: 7
+  name: SQLmap
+  url: https://sqlmap.org
+  language: Python
+  category: Database
+  description: Automatic SQL injection and database takeover tool
+  icon: fa-database
+- id: 8
+  name: Impacket
+  url: https://github.com/SecureAuthCorp/impacket
+  language: Python
+  category: Network
+  description: Collection of Python classes for working with network protocols
+  icon: fa-code

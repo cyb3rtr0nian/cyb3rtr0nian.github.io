@@ -37,101 +37,29 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
           </select>
         </div>
       </div>
-  </div>
+    </div>
 
   <div id="tools-list" class="row g-3">
       <!-- Tools will be loaded here dynamically -->
-  </div>
+    </div>
 
   <!-- Dynamic button -->
   <div class="d-flex justify-content-center align-items-center mt-4" style="height: 100px;">
-    <button id="load-more" class="btn btn-primary" style="display: none;">
-      Load More
-    </button>
-  </div>
-
+      <button id="load-more" class="btn btn-primary" style="display: none;">
+        Load More
+      </button>
+    </div>
 </div>
 
 <div aria-live="polite" id="filter-status" class="visually-hidden"></div>
 
-<!-- JavaScript for tools functionality (unchanged) -->
+<!-- JavaScript for tools functionality -->
 <script>
+  const tools = {{ site.data.tools | jsonify }};
+  
   document.addEventListener('DOMContentLoaded', function() {
-    // Sample tools data - in production this would come from an API or Jekyll data file
-    const tools = [
-      {
-        id: 1,
-        name: "Nmap",
-        url: "https://nmap.org",
-        language: "C++",
-        category: "Network",
-        description: "Network discovery and security auditing tool",
-        icon: "fa-network-wired"
-      },
-      {
-        id: 2,
-        name: "MSFconsole",
-        url: "https://www.metasploit.com",
-        language: "Ruby",
-        category: "Exploitation",
-        description: "Penetration testing platform for developing and executing exploits",
-        icon: "fa-bug"
-      },
-      {
-        id: 3,
-        name: "Burp Suite",
-        url: "https://portswigger.net/burp",
-        language: "Java",
-        category: "Web",
-        description: "Web application security testing platform",
-        icon: "fa-globe"
-      },
-      {
-        id: 4,
-        name: "John the Ripper",
-        url: "https://www.openwall.com/john",
-        language: "C",
-        category: "Password",
-        description: "Password cracking tool",
-        icon: "fa-key"
-      },
-      {
-        id: 5,
-        name: "Wireshark",
-        url: "https://www.wireshark.org",
-        language: "C++",
-        category: "Network",
-        description: "Network protocol analyzer",
-        icon: "fa-network-wired"
-      },
-      {
-        id: 6,
-        name: "Hashcat",
-        url: "https://hashcat.net/hashcat",
-        language: "C++",
-        category: "Password",
-        description: "Advanced password recovery tool",
-        icon: "fa-lock"
-      },
-      {
-        id: 7,
-        name: "SQLmap",
-        url: "https://sqlmap.org",
-        language: "Python",
-        category: "Database",
-        description: "Automatic SQL injection and database takeover tool",
-        icon: "fa-database"
-      },
-      {
-        id: 8,
-        name: "Impacket",
-        url: "https://github.com/SecureAuthCorp/impacket",
-        language: "Python",
-        category: "Network",
-        description: "Collection of Python classes for working with network protocols",
-        icon: "fa-code"
-      }
-    ];
+    // Load tools data from Jekyll data file
+    const tools = {{ site.data.tools | jsonify }};
 
     // DOM elements
     const toolsList = document.getElementById('tools-list');
@@ -377,6 +305,23 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     flex-direction: column;
   }
 
+  /* Fix for clear-filter button alignment */
+  .input-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .input-group > .form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .input-group > .btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
   /* Responsive adjustments */
   @media (max-width: 767.98px) {
     .tool-card {
@@ -399,6 +344,21 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     .tool-badge {
       font-size: 0.6rem;
       padding: 0.2em 0.4em;
+    }
+
+
+    .input-group {
+      flex-wrap: nowrap;
+      display: flex;
+            align-items: center;
+    }
+    .input-group > .form-control {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .input-group > .btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
     }
   }
 </style>
