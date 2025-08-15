@@ -40,7 +40,34 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     </div>
 
   <div id="tools-list" class="row g-3">
-      <!-- Tools will be loaded here dynamically -->
+      {% if site.data.tools %}
+        {% for tool in site.data.tools limit:6 %}
+          <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card tool-card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fas {{ tool.icon | default: 'fa-tools' }} me-2"></i>
+                  <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
+                  {% if tool.language %}
+                    <span class="badge bg-secondary tool-badge ms-2">{{ tool.language }}</span>
+                  {% endif %}
+                </h5>
+                {% if tool.category %}
+                  <span class="badge bg-primary mb-2">{{ tool.category }}</span>
+                {% endif %}
+                <p class="card-text">{{ tool.description }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 no-tools-message">
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            No tools data found. Please check _data/tools.yml.
+          </div>
+        </div>
+      {% endif %}
     </div>
 
   <!-- Dynamic button -->
@@ -55,11 +82,9 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
 
 <!-- JavaScript for tools functionality -->
 <script>
-  const tools = {{ site.data.tools | jsonify }};
-  
   document.addEventListener('DOMContentLoaded', function() {
     // Load tools data from Jekyll data file
-    const tools = {{ site.data.tools | jsonify }};
+    const tools = {{ site.data.tools | jsonify | default: '[]' }};
 
     // DOM elements
     const toolsList = document.getElementById('tools-list');
@@ -74,7 +99,18 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     let filteredTools = [...tools];
     
     // Initialize
-    renderTools();
+    if (tools.length > 0) {
+      renderTools();
+    } else {
+      toolsList.innerHTML = `
+        <div class="col-12 no-tools-message">
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Failed to load tools data. Please check the console for errors.
+          </div>
+        </div>
+      `;
+    }
     
     // Event listeners
     filterInput.addEventListener('input', handleFilter);
@@ -122,10 +158,10 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
         filteredTools = [...tools];
       } else {
         filteredTools = tools.filter(tool => 
-          tool.name.toLowerCase().includes(searchTerm) ||
+          (tool.name && tool.name.toLowerCase().includes(searchTerm)) ||
           (tool.language && tool.language.toLowerCase().includes(searchTerm)) ||
           (tool.category && tool.category.toLowerCase().includes(searchTerm)) ||
-          tool.description.toLowerCase().includes(searchTerm)
+          (tool.description && tool.description.toLowerCase().includes(searchTerm))
         );
       }
       
@@ -147,9 +183,9 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
       filteredTools.sort((a, b) => {
         switch (sortValue) {
           case 'name-asc':
-            return a.name.localeCompare(b.name);
+            return (a.name || '').localeCompare(b.name || '');
           case 'name-desc':
-            return b.name.localeCompare(a.name);
+            return (b.name || '').localeCompare(a.name || '');
           case 'language':
             return (a.language || '').localeCompare(b.language || '');
           case 'category':
@@ -346,16 +382,17 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
       padding: 0.2em 0.4em;
     }
 
-
     .input-group {
       flex-wrap: nowrap;
       display: flex;
-            align-items: center;
+      align-items: center;
     }
+
     .input-group > .form-control {
       flex: 1 1 auto;
       min-width: 0;
     }
+
     .input-group > .btn {
       flex: 0 0 auto;
       white-space: nowrap;
