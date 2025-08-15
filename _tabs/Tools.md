@@ -7,7 +7,7 @@ order: 2
 ---
 
 ##### Here is a list of my custom tools. Use the filter and sorting options to find what you need.
-Check out my GitHub repository for a complete list of my public tools: [Github](https://github.com/cyb3rtr0nian)
+Check out my GitHub repository for a complete list of my public tools: [GitHub](https://github.com/cyb3rtr0nian)
 
 <!-- Tools Listing Section -->
 <div class="tools-container mb-4">
@@ -232,7 +232,8 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: var(--bs-box-shadow-sm, 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075));
-    height: 200px; /* Fixed height for compact, uniform cards */
+    min-height: 200px; /* Minimum height for uniformity */
+    height: 100%; /* Stretch to match row height */
     display: flex;
     flex-direction: column;
     background-color: var(--card-bg, #fff);
@@ -246,7 +247,7 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
   }
 
   .tool-card .card-body {
-    padding: 0.75rem;
+    padding: 1rem; /* Increased padding for better spacing */
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
@@ -258,15 +259,19 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Prevent wrapping in title for better uniformity */
     line-height: 1.3;
     color: var(--text-color, #212529);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tool-card .card-title a {
     color: inherit;
     text-decoration: none;
     transition: color 0.2s;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tool-card .card-title a:hover {
@@ -361,11 +366,11 @@ Check out my GitHub repository for a complete list of my public tools: [Github](
   /* Responsive adjustments */
   @media (max-width: 767.98px) {
     .tool-card {
-      height: 180px;
+      min-height: 180px;
     }
 
     .tool-card .card-body {
-      padding: 0.5rem;
+      padding: 0.75rem;
     }
 
     .tool-card .card-title {

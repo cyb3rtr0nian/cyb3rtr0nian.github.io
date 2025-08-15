@@ -202,12 +202,13 @@ sass:
 
 compress_html:
   clippings: all
-  comments: all
+  comments: ["<!-- ", " -->"] #all NEWWW
   endings: all
   profile: false
   blanklines: false
   ignore:
     envs: [development]
+  remove_optional_tags: false # NEWWW
 
 exclude:
   - "*.gem"
