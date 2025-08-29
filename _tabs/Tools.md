@@ -14,27 +14,10 @@ Check out my GitHub repository for a complete list of my public tools: [GitHub](
     <div class="row g-3 mb-3">
       <div class="col-md-8">
         <div class="input-group">
-          <input 
-            id="tools-filter" 
-            type="search" 
-            class="form-control" 
-            placeholder="Filter tools by name, language or description..." 
-            aria-label="Filter tools"
-          >
-          <button id="clear-filter" class="btn btn-outline-secondary" type="button" aria-label="Clear filter">
-            <i class="fas fa-times"></i>
-          </button>
         </div>
       </div>
       <div class="col-md-4">
         <div class="input-group">
-          <label class="input-group-text" for="tools-sort">Sort by:</label>
-          <select id="tools-sort" class="form-select" aria-label="Sort tools">
-            <option value="name-asc">Name (A-Z)</option>
-            <option value="name-desc">Name (Z-A)</option>
-            <option value="language">Language</option>
-            <option value="category">Category</option>
-          </select>
         </div>
       </div>
     </div>
@@ -71,14 +54,6 @@ Check out my GitHub repository for a complete list of my public tools: [GitHub](
     </div>
 
   <!-- Dynamic button -->
-  <div class="d-flex justify-content-center align-items-center mt-4" style="height: 100px;">
-      <button id="load-more" class="btn btn-primary" style="display: none;">
-        Load More
-      </button>
-    </div>
-</div>
-
-<div aria-live="polite" id="filter-status" class="visually-hidden"></div>
 
 <!-- JavaScript for tools functionality -->
 <script>
@@ -87,16 +62,8 @@ Check out my GitHub repository for a complete list of my public tools: [GitHub](
     const tools = {{ site.data.tools | jsonify | default: '[]' }};
 
     // DOM elements
-    const toolsList = document.getElementById('tools-list');
-    const filterInput = document.getElementById('tools-filter');
-    const clearFilterBtn = document.getElementById('clear-filter');
-    const sortSelect = document.getElementById('tools-sort');
-    const loadMoreBtn = document.getElementById('load-more');
-    const filterStatus = document.getElementById('filter-status');
     
     // State
-    let visibleTools = 6;
-    let filteredTools = [...tools];
     
     // Initialize
     if (tools.length > 0) {
@@ -176,36 +143,7 @@ Check out my GitHub repository for a complete list of my public tools: [GitHub](
       handleSort();
       filterInput.focus();
     }
-    
-    function handleSort() {
-      const sortValue = sortSelect.value;
-      
-      filteredTools.sort((a, b) => {
-        switch (sortValue) {
-          case 'name-asc':
-            return (a.name || '').localeCompare(b.name || '');
-          case 'name-desc':
-            return (b.name || '').localeCompare(a.name || '');
-          case 'language':
-            return (a.language || '').localeCompare(b.language || '');
-          case 'category':
-            return (a.category || '').localeCompare(b.category || '');
-          default:
-            return 0;
-        }
-      });
-      
-      renderTools();
-    }
-    
-    function loadMoreTools() {
-      visibleTools += 6;
-      renderTools();
-      
-      if (visibleTools >= filteredTools.length) {
-        loadMoreBtn.style.display = 'none';
-      }
-    }
+        
     
     function updateFilterStatus(visibleCount, totalCount) {
       if (filterInput.value) {
