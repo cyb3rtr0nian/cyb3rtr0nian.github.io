@@ -16,7 +16,7 @@ timezone:
 
 title: Cyb3rtr0n # the main title
 
-tagline: Hacking the Matrix # Pentester | Security Researcher # it will display as the subtitle
+tagline: Trust the Process # Pentester | Security Researcher # it will display as the subtitle
 
 #description: >- # used by seo meta and the atom feed
 #  A minimal, responsive and feature-rich Jekyll theme for technical writing.
@@ -136,10 +136,10 @@ comments:
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
 assets:
   self_host:
-    enabled: # boolean, keep empty means false
+    enabled: true # boolean, keep empty means false
     # specify the Jekyll environment, empty means both
     # only works if `assets.self_host.enabled` is 'true'
-    env: # [development | production]
+    env: production # [development | production]
 
 pwa:
   enabled: true # The option for PWA feature (installable)
