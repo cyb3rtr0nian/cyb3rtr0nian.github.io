@@ -6,8 +6,7 @@ icon: fas fa-tools
 order: 2
 ---
 
-##### Here is a list of my custom tools. Use the filter and sorting options to find what you need.
-Check out my GitHub repository for a complete list of my public tools: [GitHub](https://github.com/cyb3rtr0nian)
+#### Explore my full list of custom tools available to the public!
 
 <!-- Tools Listing Section -->
 <div class="tools-container mb-4">
