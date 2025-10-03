@@ -1,8 +1,9 @@
 ---
-title: "Service Enumeration"
+title: "Service Enumeration & Footprinting"
 date: 2025-08-29 00:00:01 +0800
 categories: [The Hacker’s PlayBook]
 tags: [Enumeration]
+image: /assets/img/favicons/footprinting.webp
 ---
 
 ## Overview
