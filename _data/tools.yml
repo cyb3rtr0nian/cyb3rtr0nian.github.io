@@ -1,14 +1,15 @@
 - id: 1
-  name: Nmap
-  url: https://nmap.org
-  language: C++
+  name: SMTPX
+  url: https://github.com/cyb3rtr0nian/SMTPX
+  language: Python
   #category: Network
-  description: Network discovery and security auditing tool
+  description: Fast, accurate, and stealthy SMTP user enumeration tool. Outperforms all traditional SMTP enumeration scripts.
   icon: fa-network-wired
-- id: 2
-  name: Burp Suite
-  url: https://portswigger.net/burp
-  language: Java
+
+#- id: 2
+#  name: Burp Suite
+#  url: https://portswigger.net/burp
+#  language: Java
   #category: Web
-  description: Web application security testing platform
-  icon: fa-globe
+#  description: Web application security testing platform
+#  icon: fa-globe
