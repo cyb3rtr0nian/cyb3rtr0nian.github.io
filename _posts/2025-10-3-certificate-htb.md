@@ -102,7 +102,7 @@ Let's have a look at the open port 80.
 After exploring all the pages of the website and testing the register/login we eventually reach to the next interesting URL:
 `http://certificate.htb/upload.php?s_id=ID`
 
-The page accepts file submissions with the notice “Please select the assignment file you want to upload (the file will be reviewed by the course instructor)” which is notable because it implies human handling of uploaded content. We didn’t have any Windows credentials to start with this time, so this upload form looked like the most promising initial access vector. The application restricts uploads to `.pdf`, `.docx`, `.pptx`, `.xlsx` or `.zip`, so our next goal was to bypass that client/server check — ideally to place executable content and attempt remote code execution (RCE).
+The page accepts file submissions with the notice “Please select the assignment file you want to upload (the file will be reviewed by the course instructor)” which is notable because it implies human handling of uploaded content. We didn’t have any Windows credentials to start with this time, so this upload form looked like the most promising initial access vector. The application only accepts uploads to `.pdf`, `.docx`, `.pptx` and `.xlsx`, so our next goal was to bypass that client/server check — ideally to place executable content and attempt remote code execution (RCE).
 
 ![2](/assets/img/favicons/certificate-htb/website.png)
 
