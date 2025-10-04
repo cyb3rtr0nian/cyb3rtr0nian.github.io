@@ -17,7 +17,7 @@ image: /assets/img/favicons/certificate-htb/certificate2.png
 > 4. **Second Privilege Escalation**: Cracked a bcrypt hash to obtain the sara.b domain user credential and authenticated via WinRM.
 > 5. **Information Gathering**: Parsed a captured Kerberos pcap and extracted crackable pre-auth data, yielding lion.sk credentials after offline cracking.
 > 6. **Third Privilege Escalation**: Enumerated AD Certificate Services and abused a misconfigured template (Delegated-CRA) with certipy to request/export PFXs for on-behalf-of enrollment.
-> 7. **Domain Takeover**: Used the exported/abused certificate material to obtain TGTs / NTLM material and perform DCSync / secretsdump, yielding Domain Admin access.
+> 7. **Domain Takeover**: Exploited `SeManageVolume` privilege of `Ryan.K` to restore `root CA` sighed `.pfx`, then forged a Golden Certificate upon the `Administrator`, yielding Domain Admin access.
 
 ### Reconnaissance
 
@@ -275,7 +275,7 @@ But we can also access certificates that previously we didn’t have so we can s
 *Evil-WinRM* PS C:\Users\Ryan.K> certutil -Store My
 ```
 
-This certificate is passwordless and is self-signed which means this is the root CA of the domain, so we can perform a Golden Ticket attack.
+This certificate is passwordless and is self-signed which means this is the `root CA` of the domain, so we can perform a Golden Ticket attack.
 Exporting the certificate:
 ```
 *Evil-WinRM* PS C:\Users\Ryan.K> mkdir /temp
