@@ -1,5 +1,5 @@
 ---
-title: "Certificate - HackTheBox [Deficulty: Hard]"
+title: "Certificate - HackTheBox"
 date: 2025-09-28 00:00:00 +0800
 categories: [Walkthroughs]
 description: "Seasonal Machine — Windows [Hard]"
