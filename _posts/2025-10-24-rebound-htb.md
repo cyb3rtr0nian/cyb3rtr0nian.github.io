@@ -400,9 +400,9 @@ delegator$    ms-DS-Group-Managed-Service-Account  Constrained                 h
 
 **Get TGS for `DC01$` on `delegator$`**
 
-Now, the `ldap_monitor` account is able to request a service ticket as any user on `delegator$`. I'm going to target the `DC01$` account, because the `Administrator` account is marked as sensitive, which gives the `NOT_DELEGATED`.
+Now, the `ldap_monitor` account is able to request a **TGS** as any user on `delegator$`. We're going to target the `DC01$` account, because the `Administrator` account is marked as sensitive, which gives the `NOT_DELEGATED`.
 
-Let's get a ST (TGS ticket) as `DC01$` on `delegator$` `with impacket-getST`:
+Let's get a **TGS** as `DC01$` on `delegator$`:
 
 ```bash
 ┌──(kali㉿kali)-[~/HTB/Rebound]
