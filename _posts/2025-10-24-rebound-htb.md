@@ -11,22 +11,21 @@ image: /assets/img/favicons/rebound-htb/1.png
 [**Rebound**](https://app.hackthebox.com/machines/664) is a monster machine featuring a tricky Active Directory environment. User enumeration via RID brute-forcing reveals an AS-REP-roastable user, whose TGT is used to Kerberoast another user with a crackable password. Weak ACLs are abused to obtain access to a group with FullControl over an OU, performing a Descendant Object Takeover (DOT), followed by a ShadowCredentials attack on a user with winrm access. On the target system, cross-session relay is leveraged to obtain the NetNTLMv2 hash of a logged-in user, which, once cracked, leads to a gMSA password read. Finally, the gMSA account allows delegation, but without protocol transition. Resource-Based Constrained Delegation (RBCD) is used to impersonate the Domain Controller, enabling a DCSync attack, leading to fully elevated privileges. 
 
 #### TL;DR
-> 1. **User Enumeration**: RID brute-forced valid domain users with `nxc --rid-brute`
-> 2. **Kerberoasting (no pre-auth)**: Used `jjones` AS-REP roastable context + `impacket-GetUserSPNs -no-preauth` → cracked `ldap_monitor` & `oorend` password (`Football1!`)
+> 1. **User Enumeration**: RID brute-forced valid domain users
+> 2. **Kerberoasting (no pre-auth)**: Used `jjones` AS-REP roastable context + Kerberoasting without creds
 > 3. **BloodHound Path Discovery**: `rusthound` revealed `oorend` → `AddSelf@ServiceMgmt` → `GenericAll@Service Users OU` → **Descendant Object Takeover (DOT)**
 > 4. **DOT Execution**:
->    - Added `oorend` to `ServiceMgmt` via `bloodyAD`
->    - Enabled ACL inheritance + `FullControl` on OU with `impacket-dacledit`
+>    - Added `oorend` to `ServiceMgmt`
+>    - Enabled ACL inheritance + `FullControl` on OU
 >    - Reset `winrm_svc` password
-> 5. **Foothold**: `evil-winrm` as `winrm_svc` → user flag
-> 6. **Cross-Session NTLM Relay**: Used `RemotePotato0` + `RunasCs` to relay from `winrm_svc` session to `tbrady` console session → captured & cracked `tbrady` NTLMv2
-> 7. **gMSA Password Read**: `tbrady` has `ReadGMSAPassword` on `delegator$` → extracted gMSA NTLM hash via `nxc --gmsa`
+> 5. **Foothold**: `evil-winrm` as `winrm_svc` (user flag)
+> 6. **Cross-Session NTLM Relay**: Used `RunasCs` + `RemotePotato0` to relay from `winrm_svc` session to `tbrady` console session → captured & cracked `tbrady` NTLMv2
+> 7. **gMSA Password Read**: `tbrady` has `ReadGMSAPassword` on `delegator$` → extracted gMSA NTLM hash
 > 8. **RBCD + Constrained Delegation Chain**:
->    - Set RBCD: `ldap_monitor` → `delegator$` (`impacket-rbcd`)
+>    - Set RBCD: `ldap_monitor` → `delegator$`
 >    - Got forwardable TGS as `DC01$` to `delegator$` via S4U
 >    - Chained `delegator$`'s constrained delegation (`http/DC01`) using `-additional-ticket`
 >    - Final TGS as `DC01$@http/DC01` → **DCSync** → `Administrator` hash
-> 9. **Domain Takeover**: Used `Administrator` NTLM hash via `nxc -x` to get root flag
 
 ### Initial Enumeration
 An initial Nmap scan reveals a number of TCP ports, typical of a Windows domain controller (DC).
