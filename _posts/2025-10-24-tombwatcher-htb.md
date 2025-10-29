@@ -3,7 +3,7 @@ title: "Tombwatcher - HackTheBox"
 date: 2025-10-24 00:00:00 +0800
 categories: [Walkthroughs]
 description: "Seasonal Machine — Windows [Medium]"
-tags: [HTB, Deleted User]
+tags: [HTB, ADCS ESC15, Deleted User]
 image: /assets/img/favicons/tombwatcher-htb/1.png
 ---
 
@@ -187,15 +187,13 @@ Further enumeration with powershell:
 ```
 ![1](/assets/img/favicons/tombwatcher-htb/11.png)
 
-#### 📍 Findings
+#### Findings
 
 - The deleted account name is **`cert_admin`** (we see multiple tombstones with different GUIDs).
 - Those are **tombstone objects** → AD keeps them around (by default 180 days) before garbage collecting.
 - That matches BloodHound: the orphaned SID (`…-1111`) belonged to `cert_admin`.
 
----
-
-#### ⚡ Why this matters
+#### Why this matters
 
 - `cert_admin` had **Enroll rights** on the **WebServer certificate template**.
 - Since the user is deleted, those rights are **dangling** (no one can use them directly).

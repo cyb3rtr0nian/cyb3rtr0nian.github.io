@@ -3,7 +3,7 @@ title: "Certificate - HackTheBox"
 date: 2025-09-28 00:00:00 +0800
 categories: [Walkthroughs]
 description: "Seasonal Machine — Windows [Hard]"
-tags: [HTB, ADCS, ESC3, Golden Certificate]
+tags: [HTB, ADCS ESC3, Golden Certificate]
 image: /assets/img/favicons/certificate-htb/certificate2.png
 ---
 
