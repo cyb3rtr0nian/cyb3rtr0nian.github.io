@@ -3,7 +3,7 @@ title: "Rebound - HackTheBox"
 date: 2025-10-24 00:10:00 +0800
 categories: [Walkthroughs]
 description: "Non Seasonal Machine — Windows [Insane]"
-tags: [HTB, Cross-session Relay, RBCD]
+tags: [HTB, Cross-Session NTLM Relay, RBCD]
 image: /assets/img/favicons/rebound-htb/1.png
 ---
 
@@ -368,9 +368,9 @@ delegator$   ms-DS-Group-Managed-Service-Account  Constrained     http/dc01.rebo
 
 We see that `delegator$` has `Constrained Delegation` to `http/DC01.rebound.htb` with no protocol transition, which means that the `S4U2Self` step does not produce a **forwardable ticket**, which also causes the `S4U2proxy` step to fail.
 
-Originally, the `Service for User to Self` (S4U2self) protocol enables a service to request a Service Ticket on another user's behalf, but for its own use. Conversely, the `Service for User to Proxy` (S4U2proxy) protocol allows a service to request a Service Ticket on another user's behalf, but for a different service.
+Originally, the `Service for User to Self` (S4U2self) protocol enables a service to request a **TGS** on another user's behalf, but for its own use. Conversely, the `Service for User to Proxy` (S4U2proxy) protocol allows a service to request a **TGS** on another user's behalf, but for a different service.
 
-So We will use `Resource-Based Constrained Delegation` (RBCD) to allow `ldap_monitor` to impersonate any user to `delegator$`.
+So we will use `Resource-Based Constrained Delegation` (RBCD) to allow `ldap_monitor` to impersonate any user to `delegator$`.
 Then chain:
 1. `ldap_monitor` → impersonate `DC01$` → get TGS to `delegator$`
 2. `delegator$` → use its delegation → get TGS as `DC01$` to `http/DC01`
