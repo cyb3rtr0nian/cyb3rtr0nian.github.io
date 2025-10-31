@@ -10,5 +10,5 @@ image: /assets/img/favicons/hercules-htb/1-1.png
 ### Introduction
 [**Hercules**](https://app.hackthebox.com/machines/778) is an Insane Windows Active Directory machine that demonstrates a complex attack chain involving LDAP injection, certificate-based attacks, shadow credentials, and Resource-Based Constrained Delegation.
 
-> ## ⚠️ NOTICE!
-> ## This write will be unlocked as soon as the machine gets **Retired**!
+> ### This walkthough will be unlocked as soon as the machine gets **Retired**!
+{: .prompt-warning }
